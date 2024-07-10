@@ -238,7 +238,7 @@ class Conformer:
 
     ########################################################################################
     @staticmethod
-    def generate_conformer(romol, ss_value, generate_pdb=False,
+    def generate_conformer(romol, ss_value, numConfs=1, generate_pdb=False, 
                            output_name='structure'):
         """
         Generate the conformer with SS restraints and with the correct atom naming
@@ -247,8 +247,10 @@ class Conformer:
         :type romol: pyPept.molecule
         :param ss_value: SS predicted or provided by the user
         :type ss_value: str
+        :param numConfs: how many conformers generated
+        :type numConfs: int
         :param generate_pdb: Flag to generate or not a PDB file
-        :param generatePDB: bool
+        :type generatePDB: bool
         :param output_name: Name of the PDB file generated. A default value is provided
         :type output_name: str
 
@@ -312,10 +314,11 @@ class Conformer:
         try:
             DistanceGeometry.DoTriangleSmoothing(bounds)
             parameters = AllChem.ETKDGv3()
-            parameters.randomSeed = 0xf00d
+            # parameters.randomSeed = 0xf00d
             parameters.SetBoundsMat(bounds)
             parameters.useRandomCoords = True
-            AllChem.EmbedMolecule(romol, parameters)
+            # AllChem.EmbedMolecule(romol, parameters)
+            AllChem.EmbedMultipleConfs(romol, numConfs, params)
             # AllChem.UFFOptimizeMolecule(romol)
             pdb_mol = Chem.MolToPDBBlock(romol)
         except FileExistsError:
