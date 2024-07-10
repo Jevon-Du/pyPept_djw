@@ -318,7 +318,7 @@ class Conformer:
             parameters.SetBoundsMat(bounds)
             parameters.useRandomCoords = True
             # AllChem.EmbedMolecule(romol, parameters)
-            AllChem.EmbedMultipleConfs(romol, numConfs, params)
+            AllChem.EmbedMultipleConfs(romol, numConfs, parameters)
             # AllChem.UFFOptimizeMolecule(romol)
             pdb_mol = Chem.MolToPDBBlock(romol)
         except FileExistsError:
